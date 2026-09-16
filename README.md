@@ -7,17 +7,17 @@ But, there is **no guarantee** that this simulator totally complies with WRS rul
 
 ## how to use
 ```bash
-$ mkdir -p catkin_ws/src
-$ cd catkin_ws/src
-$ git clone https://git.hsr.io/wrs2020/hsrb_wrs_gazebo_launch.git
-$ git clone https://git.hsr.io/wrs2020/tmc_wrs_gazebo_world.git
-$ git clone https://git.hsr.io/public_sim/tmc_gazebo_task_evaluators.git
+$ mkdir -p ros2_ws/src
+$ cd ros2_ws/src
+$ git clone https://hsr-project/wrs2020/hsrb_wrs_gazebo_launch.git
+$ git clone https://hsr-project/wrs2020/tmc_wrs_gazebo_world.git
 $ cd ..
-$ catkin_make
-$ source devel/setup.bash
-$ rosrun tmc_gazebo_task_evaluators setup_score_widget
-$ roslaunch hsrb_wrs_gazebo_launch wrs_practice0_tmc.launch
+$ colcon build --symlink-install
+$ source install/setup.bash
+$ ros2 launch hsrb_wrs_gazebo_launch wrs_practice0_tmc.launch.py
 ```
+<!-- $ git clone https://git.hsr.io/public_sim/tmc_gazebo_task_evaluators.git -->
+<!--$ rosrun tmc_gazebo_task_evaluators setup_score_widget -->
 
 Gazebo simulator with WRS2020 world will appear.
 
@@ -25,13 +25,13 @@ Gazebo simulator with WRS2020 world will appear.
 
 ## task variations
 
-Simulator with reduced number of object will be launched by using "wrs_practice0_easy_tmc.launch" launchfile and can be used for early development:
+Simulator with reduced number of object will be launched by using "wrs_practice0_easy_tmc.launch.py" launchfile and can be used for early development:
 
 ```bash
-$ roslaunch hsrb_wrs_gazebo_launch wrs_practice0_easy_tmc.launch
+$ ros2 launch hsrb_wrs_gazebo_launch wrs_practice0_easy_tmc.launch.py
 ```
 
-Each simulator has different numbered launchfiles (wrs_practice0_easy_tmc.launch, wrs_practice1_easy_tmc.launch, wrs_practice2_easy_tmc.launch and wrs_practice0_tmc.launch, wrs_practice1_tmc.launch, wrs_practice2_tmc.launch) which allocates objects to slightly different positions.
+Each simulator has different numbered launchfiles (wrs_practice0_easy_tmc.launch.py, wrs_practice1_easy_tmc.launch.py, wrs_practice2_easy_tmc.launch.py and wrs_practice0_tmc.launch.py, wrs_practice1_tmc.launch.py, wrs_practice2_tmc.launch.py) which allocates objects to slightly different positions.
 
 You can use these variations to evaluate robustness of your algorithm.
 
@@ -53,7 +53,7 @@ If "highrtf" is set to "true", the simulator will run in faster-than-realtime mo
 Each arguments can be used in combination as the follows:
 
 ```bash
-$ roslaunch hsrb_wrs_gazebo_launch wrs_practice0_easy_tmc.launch seed:=10 fast_physics:=true highrtf:=true
+$ ros2 launch hsrb_wrs_gazebo_launch wrs_practice0_easy_tmc.launch.py seed:=10 fast_physics:=true highrtf:=true
 ```
 
 # LICENSE
