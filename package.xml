@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
-<package format="2">
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>hsrb_wrs_gazebo_launch</name>
-  <version>1.0.0</version>
+  <version>2.0.0</version>
   <description>Launch files for WRS simulator</description>
   <maintainer email="xr-hsr-support@mail.toyota.co.jp">HSR Support</maintainer>
 
@@ -10,13 +11,13 @@
   <author>Nobuyuki Matsuno</author>
   <author>Yosuke Matsusaka</author>
 
-  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
   <exec_depend>hsrb_gazebo_launch</exec_depend>
-  <exec_depend>roscpp</exec_depend> --
-  <test_depend>roslaunch</test_depend>
+  <exec_depend>tmc_wrs_gazebo_launch</exec_depend>
   <exec_depend>tmc_wrs_gazebo_worlds</exec_depend>
 
-  <test_depend>roslaunch</test_depend>
-
-  <export/>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
 </package>

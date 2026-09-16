@@ -25,11 +25,23 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
-rosservice call /gazebo/delete_model '{model_name: task1_tool_ycb_040_large_marker_1}'
-rosrun gazebo_ros spawn_model -database ycb_040_large_marker -sdf -model task1_tool_ycb_040_large_marker_1 -reference_frame wrc_container_a::link -x 0 -y 0 -z 0.2 -R -1.57
+#
+# ROS 2 / Gazebo Sim version. Requires the /spawn_entity and /delete_entity
+# service bridges started by tmc_wrs_gazebo_launch/launch/include/wrs_common.launch.py.
 
-rosservice call /gazebo/delete_model '{model_name: task1_kitchenitem_ycb_030_fork_1}'
-rosrun gazebo_ros spawn_model -database ycb_030_fork -sdf -model task1_kitchenitem_ycb_030_fork_1 -reference_frame wrc_container_a::link -x 0 -y 0 -z 0.2 -P -1.57
+# respawn <entity_name> <model_uri_name> <qx> <qy> <qz> <qw>
+# The object is placed 0.2 m above the origin of wrc_container_a with the given orientation.
+respawn() {
+  ros2 service call /delete_entity ros_gz_interfaces/srv/DeleteEntity \
+    "{entity: {name: '$1', type: 2}}"
+  ros2 service call /spawn_entity ros_gz_interfaces/srv/SpawnEntity \
+    "{entity_factory: {name: '$1', allow_renaming: false, relative_to: 'wrc_container_a', \
+      sdf: '<sdf version=\"1.7\"><model name=\"$1\"><include><uri>model://$2</uri><name>$2</name></include></model></sdf>', \
+      pose: {position: {x: 0.0, y: 0.0, z: 0.2}, orientation: {x: $3, y: $4, z: $5, w: $6}}}}"
+}
 
-rosservice call /gazebo/delete_model '{model_name: task1_tool_ycb_031_spoon_1}'
-rosrun gazebo_ros spawn_model -database ycb_031_spoon -sdf -model task1_kitchenitem_ycb_031_spoon_1 -reference_frame wrc_container_a::link -x 0 -y 0 -z 0.2 -R -1.57
+# roll -1.57  -> quaternion (-0.7068, 0, 0, 0.7074)
+# pitch -1.57 -> quaternion (0, -0.7068, 0, 0.7074)
+respawn task1_tool_ycb_040_large_marker_1 ycb_040_large_marker -0.7068 0.0 0.0 0.7074
+respawn task1_kitchenitem_ycb_030_fork_1  ycb_030_fork          0.0 -0.7068 0.0 0.7074
+respawn task1_kitchenitem_ycb_031_spoon_1 ycb_031_spoon        -0.7068 0.0 0.0 0.7074

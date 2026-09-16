@@ -1,14 +1,11 @@
 # This package has no tests
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.8)
 project(hsrb_wrs_gazebo_launch)
-find_package(catkin REQUIRED)
-catkin_package()
 
-install(DIRECTORY launch/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
+find_package(ament_cmake REQUIRED)
+
+install(DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
 )
 
-if (CATKIN_ENABLE_TESTING)
-  find_package(roslaunch REQUIRED)
-  roslaunch_add_file_check(launch USE_TEST_DEPENDENCIES)
-endif()
+ament_package()
